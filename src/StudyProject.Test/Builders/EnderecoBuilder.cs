@@ -5,55 +5,81 @@ using System.Text;
 
 namespace StudyProject.Test.Builders
 {
-    internal class EnderecoBuilder
+    public class EnderecoBuilder
     {
-        private Endereco endereco = new Endereco();
-        
-        public Endereco GetEndereco()   
+        public Guid Id;
+        public string Cep;
+        public string Rua;
+        public string Numero;
+        public string Complemento;
+        public string Bairro;
+        public string Cidade;
+        public string Estado;
+
+
+        public static EnderecoBuilder New()
         {
-            Endereco result = endereco;
-            Reset();
-            return result;
+            return new EnderecoBuilder()
+            {
+                Id = Guid.NewGuid(),
+                Cep = "06026000",
+                Rua = "Victor Brecheret",
+                Numero = "520",
+                Complemento = "T8 8D",
+                Bairro = "Vila Yara",
+                Cidade = "Osasco",
+                Estado = "São Paulo",
+            };
+        }
+        public EnderecoBuilder WithId(Guid id)
+        {
+            Id = id;
+            return this;
         }
 
-        public void Reset()
+        public EnderecoBuilder WithCep(string cep)
         {
-            endereco = new Endereco();
+            Cep = cep;
+            return this;
         }
 
-        public void SetBairro(string bairro)
+        public EnderecoBuilder WithRua(string rua)
         {
-            endereco.Bairro = bairro;
+            Rua = rua;
+            return this;
         }
 
-        public void SetCep(int cep)
+        public EnderecoBuilder WithNumero(string numero)
         {
-            endereco.Cep = cep;
+            Numero = numero;
+            return this;
         }
 
-        public void SetCidade(string cidade)
+        public EnderecoBuilder WithComplemento(string complemento)
         {
-            endereco.Cidade = cidade;
+            Complemento = complemento;
+            return this;
         }
 
-        public void SetComplemento(string complemento)
+        public EnderecoBuilder WithBairro(string bairro)
         {
-            endereco.Complemento = complemento;
+            Bairro = bairro;
+            return this;
         }
 
-        public void SetEstado(string estado)
+        public EnderecoBuilder WithCidade(string cidade)
         {
-            endereco.Estado = estado;
+            Cidade = cidade;
+            return this;
         }
 
-        public void SetNumero(int numero)
+        public EnderecoBuilder WithEstado(string estado)
         {
-            endereco.Numero = numero;
+            Estado = estado;
+            return this;
         }
 
-        public void SetRua(string rua)
-        {
-            endereco.Rua = rua;
-        }
+        public Endereco Build() => new Endereco(Id, Cep, Rua, Numero, Complemento, Bairro, Cidade, Estado);
+
     }
 }

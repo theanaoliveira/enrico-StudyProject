@@ -27,8 +27,7 @@ namespace StudyProject.Test.Builders
                 Cpf = "47312337805",
                 RegisterDate = DateTime.Today,
                 Ativo = true,
-            };
-        
+            };  
         }
 
         public CustomerBuilder WithId(Guid id)
