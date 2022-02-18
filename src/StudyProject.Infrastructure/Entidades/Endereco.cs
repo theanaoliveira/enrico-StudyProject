@@ -14,5 +14,6 @@ namespace StudyProject.Infrastructure.Entidades
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+
     }
 }

@@ -12,6 +12,7 @@ namespace StudyProject.Infrastructure.Entidades
         public string Rg { get; set; }
         public string Cpf { get; set; }
         public DateTime RegisterDate { get; set; }
+        public Guid EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
         public Boolean Ativo { get; set; }
     }

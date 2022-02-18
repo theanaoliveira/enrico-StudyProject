@@ -13,14 +13,14 @@ namespace StudyProject.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase("CustomerInMemory");
-            optionsBuilder.UseInMemoryDatabase("EnderecoInMemory");
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CustomerMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }
