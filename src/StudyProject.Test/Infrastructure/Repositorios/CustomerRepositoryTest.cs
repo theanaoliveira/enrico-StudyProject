@@ -10,7 +10,7 @@ namespace StudyProject.Test.Infrastructure.Repositorios
         [Fact]
         public void DeveAdicionarUmClienteNovoNoBanco()
         {
-            var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithRg("223431485").WithCpf("84023371041").Build();
             var repositorio = new CustomerRepository();
             var retorno = repositorio.AdicionarCliente(customer);
             var client = repositorio.BuscarPorNome(customer.FullName);
@@ -22,7 +22,7 @@ namespace StudyProject.Test.Infrastructure.Repositorios
         [Fact]
         public void DeveAtualizarUmClienteNovoNoBanco()
         {
-            var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithRg("163785892").WithCpf("55829931001").Build();
             var repositorio = new CustomerRepository();
             var retorno = repositorio.AdicionarCliente(customer);
             var endereco = EnderecoBuilder.New().WithId(customer.Endereco.Id).WithCustomerId(customer.Id).Build();

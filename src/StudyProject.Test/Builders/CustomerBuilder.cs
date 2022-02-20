@@ -24,7 +24,7 @@ namespace StudyProject.Test.Builders
             {
                 Id = id,
                 FullName = "Test project domain",
-                Birthday = DateTime.MinValue,
+                Birthday = new DateTime(1990, 01, 01),
                 Rg = "52238190X",
                 Cpf = "47312337805",
                 RegisterDate = DateTime.Today,
