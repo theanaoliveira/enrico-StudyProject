@@ -1,55 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using StudyProject.Domain.Validations;
+using FluentValidation.Results;
+using System;
 
 namespace StudyProject.Domain
 {
     public class Endereco
     {
-        private int cep;
-        private string rua;
-        private int numero;
-        private string complemento;
-        private string bairro;
-        private string cidade;
-        private string estado;
+        public Guid Id { get; private set; }
+        public string Cep { get; private set;}
+        public string Rua{ get; private set; }
+        public string Numero { get; private set; }
+        public string Complemento{ get; private set; }
+        public string Bairro{ get; private set; }
+        public string Cidade{ get; private set; }
+        public string Estado{ get; private set; }
+        public ValidationResult Validations { get; set; }
 
-        public int Cep
+        public Endereco(Guid id, string cep, string rua, string numero, string complemento, string bairro, string cidade, string estado)
         {
-            get => cep;
-            set => cep = value;
-        }
+            Id = id;
+            Cep = cep;
+            Rua = rua;
+            Numero = numero;
+            Complemento = complemento;
+            Bairro = bairro;
+            Cidade = cidade;
+            Estado = estado;
 
-        public string Rua
-        {
-            get => rua;
-            set => rua = value;
-        }
-        public int Numero
-        {
-            get => numero;
-            set => numero = value;
-        }
-
-        public string Complemento
-        {
-            get => complemento;
-            set => complemento = value;
-        }
-        public string Bairro
-        {
-            get => bairro;
-            set => bairro = value;
-        }
-        public string Cidade
-        {
-            get => cidade;
-            set => cidade = value;
-        }
-        public string Estado
-        {
-            get => estado;
-            set => estado = value;
+            Validations = new EnderecoValidation().Validate(this);
         }
     }
 }

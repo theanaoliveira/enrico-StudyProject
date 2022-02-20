@@ -18,6 +18,8 @@ namespace StudyProject.Test.Builders
 
         public static CustomerBuilder New()
         {
+            var endereco = EnderecoBuilder.New().Build();
+
             return new CustomerBuilder()
             {
                 Id = Guid.NewGuid(),
@@ -26,9 +28,9 @@ namespace StudyProject.Test.Builders
                 Rg = "52238190X",
                 Cpf = "47312337805",
                 RegisterDate = DateTime.Today,
+                Endereco = endereco,
                 Ativo = true,
-            };
-        
+            };  
         }
 
         public CustomerBuilder WithId(Guid id)

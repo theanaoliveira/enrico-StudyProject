@@ -37,21 +37,18 @@ namespace StudyProject.Test.Domain
             customer.Validations.Errors.Should().NotBeEmpty();
         }
 
-        [Fact]
-        public void NotCreateWithNot12CharactersRg()
+        [Theory]
+        [InlineData("aaaaaaaaaaaaaaaa")]
+        [InlineData("aaaaaaaaaaaaaa")]
+        [InlineData("")]
+        [InlineData(null)]
+        public void NotCreateWithNot12CharactersRg(string rg)
         {
-            var customer = CustomerBuilder.New().WithRg("52238190X").Build();
+            var customer = CustomerBuilder.New().WithRg(rg).Build();
 
             customer.Validations.Errors.Should().NotBeEmpty();           
         }
 
-        [Fact]
-        public void NotCreateWithEmptyRg()
-        {
-            var customer = CustomerBuilder.New().WithRg("").Build();
-
-            customer.Validations.Errors.Should().NotBeEmpty();
-        }
 
         [Theory]
         [InlineData("aaaaaaaaaaaaaaaa")]
@@ -66,21 +63,21 @@ namespace StudyProject.Test.Domain
         }
 
         
-        //[Fact]
-        //public void NotCreateWithLessThanMinimumRegisterDate()
-        //{
-        //    var customer = CustomerBuilder.New().WithBirthday(09 / 06 / 0000).Build();
+        [Fact]
+       public void NotCreateWithLessThanMinimumRegisterDate()
+        {
+            var customer = CustomerBuilder.New().WithBirthday(DateTime.MinValue).Build();
 
-        //    customer.Validations.Errors.Should().NotBeEmpty();
-        //}
+            customer.Validations.Errors.Should().NotBeEmpty();
+        }
 
-        //[Fact]
-        //public void NotCreateWithMoreThanMaximumRegisterDate()
-        //{
-        //    var customer = CustomerBuilder.New().WithBirthday(09 / 06 / 10000).Build();
+        [Fact]
+        public void NotCreateWithMoreThanMaximumRegisterDate()
+        {
+            var customer = CustomerBuilder.New().WithBirthday(DateTime.MaxValue).Build();
 
-        //    customer.Validations.Errors.Should().NotBeEmpty();
-        //}
+            customer.Validations.Errors.Should().NotBeEmpty();
+        }
 
     }
 }
