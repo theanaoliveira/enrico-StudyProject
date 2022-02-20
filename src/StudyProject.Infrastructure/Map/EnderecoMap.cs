@@ -11,6 +11,5 @@ namespace StudyProject.Infrastructure.Map
             builder.ToTable("Endereco");
             builder.HasKey(k => k.Id);
         }
-
     }
 }

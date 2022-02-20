@@ -1,13 +1,12 @@
 ﻿using StudyProject.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudyProject.Test.Builders
 {
     public class EnderecoBuilder
     {
         public Guid Id;
+        public Guid CustomerId;
         public string Cep;
         public string Rua;
         public string Numero;
@@ -22,6 +21,7 @@ namespace StudyProject.Test.Builders
             return new EnderecoBuilder()
             {
                 Id = Guid.NewGuid(),
+                CustomerId = Guid.NewGuid(),
                 Cep = "06026000",
                 Rua = "Victor Brecheret",
                 Numero = "520",
@@ -31,9 +31,16 @@ namespace StudyProject.Test.Builders
                 Estado = "São Paulo",
             };
         }
+
         public EnderecoBuilder WithId(Guid id)
         {
             Id = id;
+            return this;
+        }
+
+        public EnderecoBuilder WithCustomerId(Guid customerId)
+        {
+            CustomerId = customerId;
             return this;
         }
 
@@ -79,7 +86,7 @@ namespace StudyProject.Test.Builders
             return this;
         }
 
-        public Endereco Build() => new Endereco(Id, Cep, Rua, Numero, Complemento, Bairro, Cidade, Estado);
+        public Endereco Build() => new Endereco(Id, CustomerId, Cep, Rua, Numero, Complemento, Bairro, Cidade, Estado);
 
     }
 }

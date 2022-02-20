@@ -14,21 +14,21 @@ namespace StudyProject.Test.Builders
         public string Cpf;
         public DateTime RegisterDate;
         public Endereco Endereco;
-        public Boolean Ativo;
+        public bool Ativo;
 
         public static CustomerBuilder New()
         {
-            var endereco = EnderecoBuilder.New().Build();
+            var id = Guid.NewGuid();
 
             return new CustomerBuilder()
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 FullName = "Test project domain",
                 Birthday = DateTime.MinValue,
                 Rg = "52238190X",
                 Cpf = "47312337805",
                 RegisterDate = DateTime.Today,
-                Endereco = endereco,
+                Endereco = EnderecoBuilder.New().WithCustomerId(id).Build(),
                 Ativo = true,
             };  
         }
@@ -66,6 +66,12 @@ namespace StudyProject.Test.Builders
         public CustomerBuilder WithRegisterDate(DateTime registerDate)
         {
             RegisterDate = registerDate;
+            return this;
+        }
+
+        public CustomerBuilder WithEndereco(Endereco endereco)
+        {
+            Endereco = endereco;
             return this;
         }
 
