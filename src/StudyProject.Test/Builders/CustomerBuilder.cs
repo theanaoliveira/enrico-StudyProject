@@ -39,6 +39,12 @@ namespace StudyProject.Test.Builders
             return this;
         }
 
+        public CustomerBuilder WithEndereco(Endereco endereco)
+        {
+            Endereco = endereco;
+            return this;
+        }
+
         public CustomerBuilder WithFullName(string fullName)
         {
             FullName = fullName;

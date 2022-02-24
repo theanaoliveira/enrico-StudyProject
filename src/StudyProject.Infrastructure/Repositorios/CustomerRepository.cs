@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using StudyProject.Application.Repositories;
 using StudyProject.Domain;
 using System;
 using System.Collections.Generic;
@@ -7,169 +9,123 @@ using System.Text;
 
 namespace StudyProject.Infrastructure.Repositorios
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
-        private Entidades.Endereco MontarEndereco(Customer customer)
+        private IMapper CreateMap()
         {
-            var enderecoEntity = new Entidades.Endereco()
+            return new MapperConfiguration(cfg =>
             {
-                Id = customer.Endereco.Id,
-                Cep = customer.Endereco.Cep,
-                Rua = customer.Endereco.Rua,
-                Numero = customer.Endereco.Numero,
-                Complemento = customer.Endereco.Complemento,
-                Bairro = customer.Endereco.Bairro,
-                Cidade = customer.Endereco.Cidade,
-                Estado = customer.Endereco.Estado
-            };
-
-            return enderecoEntity;
+                cfg.CreateMap<Customer, Entidades.Customer>().ReverseMap();
+                cfg.CreateMap<Endereco, Entidades.Endereco>().ReverseMap();
+            }).CreateMapper();
         }
 
+        private readonly IMapper mapper;
+
+        public CustomerRepository(IMapper mapper)
+        {
+            this.mapper = mapper;
+        }
 
         public bool AdicionarCliente(Customer customer)
         {
             using var context = new Context();
 
-            //todo: Criar metodos para Atualizar, Deletar e Consultar e retornar tudo que foi salvo
+            var map = CreateMap();
+            var customerEntity = map.Map<Entidades.Customer>(customer);
 
-            var enderecoEntity = MontarEndereco(customer);
+            context.Customers.Add(customerEntity);
+            var i = context.SaveChanges();
 
+            return i > 0;
+        }
 
-            var customerEntity = new Entidades.Customer()
-            {
-                Id = customer.Id,
-                FullName = customer.FullName,
-                Rg = customer.Rg,
-                Cpf = customer.Cpf,
-                Birthday = customer.Birthday,
-                RegisterDate = customer.RegisterDate,
-                EnderecoId = enderecoEntity.Id,
-                Endereco = enderecoEntity
-            };
+        public bool AdicionarClientes(List<Customer> customers)
+        {
+            using var context = new Context();
+            var map = CreateMap();
+            var customerEntity = map.Map<List<Entidades.Customer>>(customers);
 
-            var customerDb = context.Customers.Where(w => w.Rg == customer.Rg || w.Cpf == customer.Cpf).ToList();
+            context.Customers.AddRange(customerEntity);
+            var i = context.SaveChanges();
 
-            if (customerDb.Count == 0)
-            {
-                context.Entry<Entidades.Endereco>(customerEntity.Endereco);
-                context.Customers.Add(customerEntity);
-                context.SaveChanges();
-
-                return true;
-            }
-            return false;
-
+            return i > 0;
         }
 
         public bool AtualizarCliente(Customer customer)
         {
             using var context = new Context();
 
-            var enderecoEntity = MontarEndereco(customer);
+            var map = CreateMap();
 
-            var customerEntity = new Entidades.Customer()
-            {
-                Id = customer.Id,
-                FullName = customer.FullName,
-                Rg = customer.Rg,
-                Cpf = customer.Cpf,
-                Birthday = customer.Birthday,
-                EnderecoId = enderecoEntity.Id,
-                //Endereco = enderecoEntity,
-                RegisterDate = customer.RegisterDate,
-            };
-
-
+            var customerEntity = map.Map<Entidades.Customer>(customer);
 
             context.Customers.Update(customerEntity);
+
             var i = context.SaveChanges();
 
-            return true;
-
+            return i > 0;
         }
 
+        public List<Customer> GetAll()
+        {
+            using var context = new Context();
+
+            var map = CreateMap();
+
+            var customerList = context.Customers.Include(i => i.Endereco).ToList();
+
+            return map.Map<List<Customer>>(customerList);
+        }
+
+        public Customer BuscarCliente(string rg, string cpf)
+        {
+            using var context = new Context();
+            var cliente = context.Customers.Where(w => (w.Cpf.Equals(cpf) || w.Rg.Equals(rg)) && w.Ativo).FirstOrDefault();
+
+            return mapper.Map<Customer>(cliente);
+        }
 
         public Customer BuscarPorNome(string nome)
         {
             using var context = new Context();
 
-            var cliente = context.Customers
-                //.Include(i => i.Endereco)
+            var map = CreateMap();
+
+            var customer = context.Customers.Include(i => i.Endereco)
                 .Where(w => w.FullName == nome).FirstOrDefault();
 
-            if (cliente != null)
-            {
-                //var endereco = new Endereco(cliente.Endereco.Id, cliente.Endereco.Cep, cliente.Endereco.Rua,
-                // cliente.Endereco.Numero, cliente.Endereco.Complemento, cliente.Endereco.Bairro, cliente.Endereco.Cidade,
-                //  cliente.Endereco.Estado);
-
-                var customerDomain = new Customer(cliente.Id, cliente.FullName, cliente.Birthday, cliente.Rg,
-                    cliente.Cpf, cliente.RegisterDate, null, cliente.Ativo);
-
-                return customerDomain;
-            }
-            return null;
+            return map.Map<Customer>(customer);
         }
+
+        //CTRL + k + d == identar o codigo
+
+        public Customer BuscarPorId(Guid id)
+        {
+            using var context = new Context();
+
+            var map = CreateMap();
+
+            var customer = context.Customers.Include(i => i.Endereco)
+                .Where(w => w.Id == id).FirstOrDefault();
+
+            return map.Map<Customer>(customer);
+        }
+
 
         public bool DeletarCliente(Customer customer)
         {
             using var context = new Context();
 
-            var enderecoEntity = new Entidades.Endereco()
-            {
-                Cep = customer.Endereco.Cep,
-                Rua = customer.Endereco.Rua,
-                Numero = customer.Endereco.Numero,
-                Complemento = customer.Endereco.Complemento,
-                Bairro = customer.Endereco.Bairro,
-                Cidade = customer.Endereco.Cidade,
-                Estado = customer.Endereco.Estado
-            };
-
-            var customerEntity = new Entidades.Customer()
-            {
-                FullName = customer.FullName,
-                Rg = customer.Rg,
-                Cpf = customer.Cpf,
-                Birthday = customer.Birthday,
-                RegisterDate = customer.RegisterDate,
-                Endereco = enderecoEntity
-            };
-
-            var remover =  context.Customers.Where(w => w.Id == customer.Id).FirstOrDefault();
+            var remover = context.Customers.Where(w => w.Id == customer.Id).FirstOrDefault();
 
             context.Customers.Remove(remover);
 
-            var customerDb = context.Customers.Where(w => w.Rg == customer.Rg && w.Cpf == customer.Cpf).ToList();
+            var i = context.SaveChanges();
 
-            if (customerDb.Count == 0)
-            {
-                context.Customers.Add(customerEntity);
-                context.SaveChanges();
-
-                return true;
-            }
-            return false;
-
-            var customerDb2 = context.Customers.Where(w => w.Rg == customer.Rg && w.Cpf == customer.Cpf).ToList();
-
-            if (customerDb2.Count == 1)
-            {
-
-                context.Customers.Remove(customerEntity);
-                context.SaveChanges();
-
-                return true;
-            }
-            return false;
-
-
+            return i > 0;
         }
-
-
     }
-
 
 }
 

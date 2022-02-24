@@ -8,6 +8,7 @@ namespace StudyProject.Test.Builders
     public class EnderecoBuilder
     {
         public Guid Id;
+        public Guid CustomerId;
         public string Cep;
         public string Rua;
         public string Numero;
@@ -34,6 +35,11 @@ namespace StudyProject.Test.Builders
         public EnderecoBuilder WithId(Guid id)
         {
             Id = id;
+            return this;
+        }
+        public EnderecoBuilder WithCustomerId(Guid customerId)
+        {
+            CustomerId = customerId;
             return this;
         }
 

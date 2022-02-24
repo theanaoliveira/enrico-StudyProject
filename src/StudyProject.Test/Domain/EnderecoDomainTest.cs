@@ -18,6 +18,7 @@ namespace StudyProject.Test.Domain
             var endereco = EnderecoBuilder.New().WithCep(cep).Build();
 
             endereco.Validations.Errors.Should().NotBeEmpty();
+            endereco.Validations.Errors.Should().NotBeNull();
         }
 
         [Theory]
@@ -27,7 +28,8 @@ namespace StudyProject.Test.Domain
         {
             var endereco = EnderecoBuilder.New().WithRua(rua).Build();
 
-            endereco.Validations.Errors.Should().NotBeEmpty();    
+            endereco.Validations.Errors.Should().NotBeEmpty();
+            endereco.Validations.Errors.Should().NotBeNull();
         }
 
         [Theory]
@@ -38,6 +40,7 @@ namespace StudyProject.Test.Domain
             var endereco = EnderecoBuilder.New().WithNumero(numero).Build();
 
             endereco.Validations.Errors.Should().NotBeEmpty();
+            endereco.Validations.Errors.Should().NotBeNull();
         }
 
         [Theory]
@@ -48,24 +51,28 @@ namespace StudyProject.Test.Domain
             var endereco = EnderecoBuilder.New().WithBairro(bairro).Build();
 
             endereco.Validations.Errors.Should().NotBeEmpty();
+            endereco.Validations.Errors.Should().NotBeNull();
         }
+        
         [Theory]
         [InlineData("")]
         [InlineData(null)]
         public void NotCreateWithEmptyCidade(string cidade)
         {
-            var endereco = EnderecoBuilder.New().WithRua(cidade).Build();
+            var endereco = EnderecoBuilder.New().WithCidade(cidade).Build();
 
             endereco.Validations.Errors.Should().NotBeEmpty();
+            endereco.Validations.Errors.Should().NotBeNull();
         }
         [Theory]
         [InlineData("")]
         [InlineData(null)]
         public void NotCreateWithEmptyEstado(string estado)
         {
-            var endereco = EnderecoBuilder.New().WithRua(estado).Build();
+            var endereco = EnderecoBuilder.New().WithEstado(estado).Build();
 
             endereco.Validations.Errors.Should().NotBeEmpty();
+            endereco.Validations.Errors.Should().NotBeNull();
         }
        
 
