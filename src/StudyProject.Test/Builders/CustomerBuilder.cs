@@ -18,17 +18,15 @@ namespace StudyProject.Test.Builders
 
         public static CustomerBuilder New()
         {
-            var id = Guid.NewGuid();
-
             return new CustomerBuilder()
             {
-                Id = id,
+                Id = Guid.NewGuid(),
                 FullName = "Test project domain",
                 Birthday = new DateTime(1990, 01, 01),
                 Rg = "52238190X",
                 Cpf = "47312337805",
                 RegisterDate = DateTime.Today,
-                Endereco = EnderecoBuilder.New().WithCustomerId(id).Build(),
+                Endereco = EnderecoBuilder.New().Build(),
                 Ativo = true,
             };  
         }

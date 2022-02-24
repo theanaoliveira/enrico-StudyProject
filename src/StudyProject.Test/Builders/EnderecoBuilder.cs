@@ -6,7 +6,6 @@ namespace StudyProject.Test.Builders
     public class EnderecoBuilder
     {
         public Guid Id;
-        public Guid CustomerId;
         public string Cep;
         public string Rua;
         public string Numero;
@@ -21,7 +20,6 @@ namespace StudyProject.Test.Builders
             return new EnderecoBuilder()
             {
                 Id = Guid.NewGuid(),
-                CustomerId = Guid.NewGuid(),
                 Cep = "06026000",
                 Rua = "Victor Brecheret",
                 Numero = "520",
@@ -37,13 +35,6 @@ namespace StudyProject.Test.Builders
             Id = id;
             return this;
         }
-
-        public EnderecoBuilder WithCustomerId(Guid customerId)
-        {
-            CustomerId = customerId;
-            return this;
-        }
-
         public EnderecoBuilder WithCep(string cep)
         {
             Cep = cep;
@@ -86,7 +77,7 @@ namespace StudyProject.Test.Builders
             return this;
         }
 
-        public Endereco Build() => new Endereco(Id, CustomerId, Cep, Rua, Numero, Complemento, Bairro, Cidade, Estado);
+        public Endereco Build() => new Endereco(Id, Cep, Rua, Numero, Complemento, Bairro, Cidade, Estado);
 
     }
 }
