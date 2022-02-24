@@ -9,11 +9,11 @@ namespace StudyProject.Test.Infrastructure.Repositorios
     [UseAutofacTestFramework]
     public class CustomerRepositoryTest
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerRepository customerRepository;
 
         public CustomerRepositoryTest(ICustomerRepository customerRepository)
         {
-            _customerRepository = customerRepository;
+            this.customerRepository = customerRepository;
         }
 
         [Fact]
@@ -21,8 +21,8 @@ namespace StudyProject.Test.Infrastructure.Repositorios
         {
             var customer = CustomerBuilder.New().WithRg("223431485").WithCpf("84023371041").Build();
           
-            var retorno = _customerRepository.AdicionarCliente(customer);
-            var client = _customerRepository.BuscarPorNome(customer.FullName);
+            var retorno = customerRepository.AdicionarCliente(customer);
+            var client = customerRepository.BuscarPorNome(customer.FullName);
 
             retorno.Should().BeTrue();
             client.Should().NotBeNull();
@@ -32,15 +32,15 @@ namespace StudyProject.Test.Infrastructure.Repositorios
         public void DeveAtualizarUmClienteNovoNoBanco()
         {
             var customer = CustomerBuilder.New().WithRg("163785892").WithCpf("55829931001").Build();
-            var retorno = _customerRepository.AdicionarCliente(customer);
             var endereco = EnderecoBuilder.New().WithId(customer.Endereco.Id).Build();
 
+            customerRepository.AdicionarCliente(customer);
+            
             customer = CustomerBuilder.New().WithId(customer.Id).WithFullName("Teste atualizar").WithEndereco(endereco).Build();
 
-            var retorno1 = _customerRepository.AtualizarCliente(customer);
-            var a = _customerRepository.BuscarPorNome("Teste atualizar");
+            var retorno1 = customerRepository.AtualizarCliente(customer);
+            var a = customerRepository.BuscarPorNome("Teste atualizar");
 
-            retorno.Should().BeTrue();
             retorno1.Should().BeTrue();
             a.Should().NotBeNull();
         }

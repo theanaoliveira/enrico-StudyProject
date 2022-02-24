@@ -19,17 +19,12 @@ namespace StudyProject.Infrastructure.Repositorios
         {
             using var context = new Context();
             var customerEntity = mapper.Map<Entidades.Customer>(customer);
-            var customerDb = context.Customers.Where(w => w.Rg == customer.Rg || w.Cpf == customer.Cpf).ToList();
 
-            if (customerDb.Count == 0)
-            {
-                context.Customers.Add(customerEntity);
-                context.SaveChanges();
+            context.Customers.Add(customerEntity);
 
-                return true;
-            }
+            var i = context.SaveChanges();
 
-            return false;
+            return i > 0;
         }
 
         public bool AtualizarCliente(Customer customer)
