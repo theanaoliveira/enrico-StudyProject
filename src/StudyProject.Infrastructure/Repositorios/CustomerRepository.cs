@@ -44,6 +44,14 @@ namespace StudyProject.Infrastructure.Repositorios
             return i > 0;
         }
 
+        public Customer BuscarCliente(string rg, string cpf)
+        {
+            using var context = new Context();
+            var cliente = context.Customers.Where(w => (w.Cpf.Equals(cpf) || w.Rg.Equals(rg)) && w.Ativo).FirstOrDefault();
+
+            return mapper.Map<Customer>(cliente);
+        }
+
         public Customer BuscarPorNome(string nome)
         {
             using var context = new Context();
