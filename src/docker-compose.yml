@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  studyproject-webapi:
+    image: ${DOCKER_REGISTRY-}studyprojectwebapi
+    build:
+      context: .
+      dockerfile: StudyProject.Webapi/Dockerfile
+    networks:
+      - project-net
+
+networks:
+  project-net:

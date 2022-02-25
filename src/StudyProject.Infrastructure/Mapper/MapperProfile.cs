@@ -3,7 +3,7 @@ using StudyProject.Domain;
 
 namespace StudyProject.Infrastructure.Mapper
 {
-    public class MapperProfile: Profile
+    public class MapperProfile : Profile
     {
         public MapperProfile()
         {

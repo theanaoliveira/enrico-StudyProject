@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using StudyProject.Application.UseCases;
 using StudyProject.Application.UseCases.Add;
 
 namespace StudyProject.Infrastructure.Module
@@ -8,6 +9,8 @@ namespace StudyProject.Infrastructure.Module
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AddUseCase>().As<IAddUseCase>().AsImplementedInterfaces().AsSelf();
+            
+            builder.RegisterAssemblyTypes(typeof(Handler<>).Assembly).AsImplementedInterfaces().AsSelf().InstancePerDependency();
         }
     }
 }
