@@ -86,7 +86,7 @@ namespace StudyProject.Infrastructure.DataAccess.Repositorios
         public List<Customer> GetAll()
         {
             using var context = new Context();
-            var customers = context.Customers.ToList();
+            var customers = context.Customers.Include(i => i.Endereco).ToList();
 
             return mapper.Map<List<Customer>>(customers);
         }
@@ -95,7 +95,7 @@ namespace StudyProject.Infrastructure.DataAccess.Repositorios
         {
             using var context = new Context();
 
-            var remover = context.Customers.Where(w => w.Id == customer.Id).FirstOrDefault();
+            var remover = context.Customers.Include(i => i.Endereco).Where(w => w.Id == customer.Id).FirstOrDefault();
 
             context.Customers.Remove(remover);
 

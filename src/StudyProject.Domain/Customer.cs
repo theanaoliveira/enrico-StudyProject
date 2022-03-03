@@ -28,5 +28,7 @@ namespace StudyProject.Domain
             Ativo = ativo;
             Validations = new CustomerValidation().Validate(this);
         }
+
+        public void SetStatus(bool status) => Ativo = status;
     }
 }
