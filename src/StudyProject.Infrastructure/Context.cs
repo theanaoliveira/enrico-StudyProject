@@ -5,14 +5,19 @@ using System;
 
 namespace StudyProject.Infrastructure
 {
-    public class Context: DbContext
+    public class Context : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("CustomerInMemory");
+            if (Environment.GetEnvironmentVariable("CONN") != null)
+            {
+                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("CONN"), o => o.EnableRetryOnFailure(2));
+            }
+            else
+                optionsBuilder.UseInMemoryDatabase("CustomerInMemory");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

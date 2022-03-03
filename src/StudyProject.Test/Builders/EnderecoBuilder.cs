@@ -6,6 +6,7 @@ namespace StudyProject.Test.Builders
     public class EnderecoBuilder
     {
         public Guid Id;
+        public Guid CustomerId;
         public string Cep;
         public string Rua;
         public string Numero;

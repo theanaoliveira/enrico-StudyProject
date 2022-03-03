@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UseCases\GetAll\GetAllRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\StudyProject.Domain\StudyProject.Domain.csproj" />
   </ItemGroup>
 

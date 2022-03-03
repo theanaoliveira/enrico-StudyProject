@@ -3,6 +3,8 @@ using StudyProject.Application.Repositories;
 using StudyProject.Application.UseCases.Add;
 using StudyProject.Test.Builders;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 using Xunit.Frameworks.Autofac;
 

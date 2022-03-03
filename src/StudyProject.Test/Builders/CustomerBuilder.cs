@@ -1,7 +1,5 @@
 ﻿using StudyProject.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudyProject.Test.Builders
 {
@@ -37,6 +35,12 @@ namespace StudyProject.Test.Builders
             return this;
         }
 
+        public CustomerBuilder WithEndereco(Endereco endereco)
+        {
+            Endereco = endereco;
+            return this;
+        }
+
         public CustomerBuilder WithFullName(string fullName)
         {
             FullName = fullName;
@@ -64,12 +68,6 @@ namespace StudyProject.Test.Builders
         public CustomerBuilder WithRegisterDate(DateTime registerDate)
         {
             RegisterDate = registerDate;
-            return this;
-        }
-
-        public CustomerBuilder WithEndereco(Endereco endereco)
-        {
-            Endereco = endereco;
             return this;
         }
 

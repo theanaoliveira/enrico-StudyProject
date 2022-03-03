@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using StudyProject.Application.Repositories;
 using StudyProject.Domain;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StudyProject.Infrastructure.Repositorios
@@ -56,12 +58,47 @@ namespace StudyProject.Infrastructure.Repositorios
 
             return mapper.Map<Customer>(cliente);
         }
+        
+        //CTRL + k + d == identar o codigo
+
+        public Customer BuscarPorId(Guid id)
+        {
+            using var context = new Context();
+
+            var customer = context.Customers.Include(i => i.Endereco)
+                .Where(w => w.Id == id).FirstOrDefault();
+
+            return mapper.Map<Customer>(customer);
+        }
+
+        public bool AdicionarClientes(List<Customer> customers)
+        {
+            using var context = new Context();
+            var customerEntity = mapper.Map<List<Entidades.Customer>>(customers);
+
+            context.Customers.AddRange(customerEntity);
+
+            var i = context.SaveChanges();
+
+            return i > 0;
+        }
+
+        public List<Customer> GetAll()
+        {
+            using var context = new Context();
+            var customers = context.Customers.ToList();
+
+            return mapper.Map<List<Customer>>(customers);
+        }
 
         public bool DeletarCliente(Customer customer)
         {
             using var context = new Context();
 
-            context.Customers.Remove(mapper.Map<Entidades.Customer>(customer));
+            var remover = context.Customers.Where(w => w.Id == customer.Id).FirstOrDefault();
+
+            context.Customers.Remove(remover);
+
             var i = context.SaveChanges();
 
             return i > 0;

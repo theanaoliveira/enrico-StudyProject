@@ -1,17 +1,16 @@
 ﻿using Autofac;
-using StudyProject.Infrastructure.Module;
+using StudyProject.Infrastructure.Modules;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Frameworks.Autofac;
 
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
-[assembly: TestFramework("StudyProject.Test.ConfigureTests", "StudyProject.Test")]
+[assembly: TestFramework("StudyProject.Test.ConfigureTestFramework", "StudyProject.Test")]
 namespace StudyProject.Test
 {
-    public class ConfigureTests : AutofacTestFramework
+    public class ConfigureTestFramework : AutofacTestFramework
     {
-        public ConfigureTests(IMessageSink diagnosticMessageSink) 
-            : base(diagnosticMessageSink)
+        public ConfigureTestFramework(IMessageSink diagnosticMessageSink)
+          : base(diagnosticMessageSink)
         {
         }
 

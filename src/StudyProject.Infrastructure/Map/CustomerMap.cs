@@ -8,7 +8,7 @@ namespace StudyProject.Infrastructure.Map
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.ToTable("Customer");
+            builder.ToTable("Customer", "public");
             builder.HasKey(k => k.Id);
         }
     }
