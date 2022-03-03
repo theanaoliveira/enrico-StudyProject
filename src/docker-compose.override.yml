@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: StudyProject.Webapi/Dockerfile
     environment:
-      CONN: ""
+      - CONN=Host=host.docker.internal,Port=5432,Database=postgres,User Id=postgres,Password=postgres
     ports:
       - "5000:80"
     depends_on:
@@ -20,7 +20,7 @@ services:
     environment:  
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=Report
+      - POSTGRES_DB=postgres
     ports:
       - 5432:5432
     volumes:
@@ -28,8 +28,23 @@ services:
     networks:
       - project-net
 
+  pgadmin4:
+    image: dpage/pgadmin4
+    volumes:
+      - pgservers:/servers.json
+    ports:
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: teste@teste.com
+      PGADMIN_DEFAULT_PASSWORD: teste
+    depends_on:
+      - project-db
+    networks:
+      - project-net
+
 volumes:
   pgdata:
+  pgservers:
 
 networks:
   project-net:

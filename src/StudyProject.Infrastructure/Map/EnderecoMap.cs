@@ -8,7 +8,7 @@ namespace StudyProject.Infrastructure.Map
     {
         public void Configure(EntityTypeBuilder<Endereco> builder)
         {
-            builder.ToTable("Endereco");
+            builder.ToTable("Endereco", "public");
             builder.HasKey(k => k.Id);
         }
     }
