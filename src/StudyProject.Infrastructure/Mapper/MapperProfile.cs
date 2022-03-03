@@ -1,5 +1,5 @@
-﻿using StudyProject.Domain;
-using AutoMapper;
+﻿using AutoMapper;
+using StudyProject.Domain;
 
 namespace StudyProject.Infrastructure.Mapper
 {

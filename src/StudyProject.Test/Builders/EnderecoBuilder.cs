@@ -1,7 +1,5 @@
 ﻿using StudyProject.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudyProject.Test.Builders
 {
@@ -32,17 +30,12 @@ namespace StudyProject.Test.Builders
                 Estado = "São Paulo",
             };
         }
+
         public EnderecoBuilder WithId(Guid id)
         {
             Id = id;
             return this;
         }
-        public EnderecoBuilder WithCustomerId(Guid customerId)
-        {
-            CustomerId = customerId;
-            return this;
-        }
-
         public EnderecoBuilder WithCep(string cep)
         {
             Cep = cep;

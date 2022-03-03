@@ -1,13 +1,10 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudyProject.Domain.Validations
 {
     public class EnderecoValidation : AbstractValidator<Endereco>
-    {
-    
+    {    
         public EnderecoValidation()
         {
             RuleFor(r => r.Id).NotEqual(new Guid()); //00000000-0000-0000-0000-000000000000
@@ -17,8 +14,6 @@ namespace StudyProject.Domain.Validations
             RuleFor(r => r.Bairro).NotEmpty().NotNull().WithMessage("Bairro não pode ser em branco");
             RuleFor(r => r.Cidade).NotEmpty().NotNull().WithMessage("Cidade não pode ser em branco");
             RuleFor(r => r.Estado).NotEmpty().NotNull().WithMessage("Estado não pode ser em branco");
-
-        }
-    
+        }    
     }
 }

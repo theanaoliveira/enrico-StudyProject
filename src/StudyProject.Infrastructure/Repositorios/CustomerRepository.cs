@@ -5,21 +5,11 @@ using StudyProject.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace StudyProject.Infrastructure.Repositorios
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private IMapper CreateMap()
-        {
-            return new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Customer, Entidades.Customer>().ReverseMap();
-                cfg.CreateMap<Endereco, Entidades.Endereco>().ReverseMap();
-            }).CreateMapper();
-        }
-
         private readonly IMapper mapper;
 
         public CustomerRepository(IMapper mapper)
@@ -30,23 +20,10 @@ namespace StudyProject.Infrastructure.Repositorios
         public bool AdicionarCliente(Customer customer)
         {
             using var context = new Context();
-
-            var map = CreateMap();
-            var customerEntity = map.Map<Entidades.Customer>(customer);
+            var customerEntity = mapper.Map<Entidades.Customer>(customer);
 
             context.Customers.Add(customerEntity);
-            var i = context.SaveChanges();
 
-            return i > 0;
-        }
-
-        public bool AdicionarClientes(List<Customer> customers)
-        {
-            using var context = new Context();
-            var map = CreateMap();
-            var customerEntity = map.Map<List<Entidades.Customer>>(customers);
-
-            context.Customers.AddRange(customerEntity);
             var i = context.SaveChanges();
 
             return i > 0;
@@ -55,27 +32,13 @@ namespace StudyProject.Infrastructure.Repositorios
         public bool AtualizarCliente(Customer customer)
         {
             using var context = new Context();
-
-            var map = CreateMap();
-
-            var customerEntity = map.Map<Entidades.Customer>(customer);
+            var customerEntity = mapper.Map<Entidades.Customer>(customer);
 
             context.Customers.Update(customerEntity);
 
             var i = context.SaveChanges();
 
             return i > 0;
-        }
-
-        public List<Customer> GetAll()
-        {
-            using var context = new Context();
-
-            var map = CreateMap();
-
-            var customerList = context.Customers.Include(i => i.Endereco).ToList();
-
-            return map.Map<List<Customer>>(customerList);
         }
 
         public Customer BuscarCliente(string rg, string cpf)
@@ -89,29 +52,44 @@ namespace StudyProject.Infrastructure.Repositorios
         public Customer BuscarPorNome(string nome)
         {
             using var context = new Context();
-
-            var map = CreateMap();
-
-            var customer = context.Customers.Include(i => i.Endereco)
+            var cliente = context.Customers
+                .Include(i => i.Endereco)
                 .Where(w => w.FullName == nome).FirstOrDefault();
 
-            return map.Map<Customer>(customer);
+            return mapper.Map<Customer>(cliente);
         }
-
+        
         //CTRL + k + d == identar o codigo
 
         public Customer BuscarPorId(Guid id)
         {
             using var context = new Context();
 
-            var map = CreateMap();
-
             var customer = context.Customers.Include(i => i.Endereco)
                 .Where(w => w.Id == id).FirstOrDefault();
 
-            return map.Map<Customer>(customer);
+            return mapper.Map<Customer>(customer);
         }
 
+        public bool AdicionarClientes(List<Customer> customers)
+        {
+            using var context = new Context();
+            var customerEntity = mapper.Map<List<Entidades.Customer>>(customers);
+
+            context.Customers.AddRange(customerEntity);
+
+            var i = context.SaveChanges();
+
+            return i > 0;
+        }
+
+        public List<Customer> GetAll()
+        {
+            using var context = new Context();
+            var customers = context.Customers.ToList();
+
+            return mapper.Map<List<Customer>>(customers);
+        }
 
         public bool DeletarCliente(Customer customer)
         {
@@ -126,6 +104,5 @@ namespace StudyProject.Infrastructure.Repositorios
             return i > 0;
         }
     }
-
 }
 

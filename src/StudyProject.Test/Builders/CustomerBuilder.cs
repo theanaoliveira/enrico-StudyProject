@@ -1,7 +1,5 @@
 ﻿using StudyProject.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudyProject.Test.Builders
 {
@@ -14,21 +12,19 @@ namespace StudyProject.Test.Builders
         public string Cpf;
         public DateTime RegisterDate;
         public Endereco Endereco;
-        public Boolean Ativo;
+        public bool Ativo;
 
         public static CustomerBuilder New()
         {
-            var endereco = EnderecoBuilder.New().Build();
-
             return new CustomerBuilder()
             {
                 Id = Guid.NewGuid(),
                 FullName = "Test project domain",
-                Birthday = DateTime.MinValue,
+                Birthday = new DateTime(1990, 01, 01),
                 Rg = "52238190X",
                 Cpf = "47312337805",
                 RegisterDate = DateTime.Today,
-                Endereco = endereco,
+                Endereco = EnderecoBuilder.New().Build(),
                 Ativo = true,
             };  
         }

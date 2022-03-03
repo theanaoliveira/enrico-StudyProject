@@ -16,7 +16,7 @@ namespace StudyProject.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<addUseCase>().As<IAddUseCase>().AsImplementedInterfaces();
+            builder.RegisterType<AddUseCase>().As<IAddUseCase>().AsImplementedInterfaces();
             builder.RegisterType<GetAllUseCase>().As<IGetAllUseCase>().AsImplementedInterfaces();
             builder.RegisterType<GetByIdUseCase>().As<IGetByIdUseCase>().AsImplementedInterfaces();
             

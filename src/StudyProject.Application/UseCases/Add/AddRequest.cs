@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudyProject.Domain;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +18,8 @@ namespace StudyProject.Application.UseCases.Add
         public string Bairro { get; private set; }
         public string Cidade { get; private set; }
         public string Estado { get; private set; }
+        public Endereco Endereco { get; set; }
+        public Customer Customer { get; set; }
         public List<string> Erros { get; set; }
 
         public AddRequest(string fullName, DateTime birthday, string rg, string cpf, string cep, string rua, string numero, string complemento, string bairro, string cidade, string estado)

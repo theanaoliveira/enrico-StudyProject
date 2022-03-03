@@ -33,12 +33,9 @@ namespace StudyProject.Test.Application.UseCases.GetById
 
             var request = new GetByIdRequest(cliente.Id);
 
-            var a = getByIdUseCase.Execute(request.Id);
-
-            var b = customerRepository.BuscarPorId(request.Id);
+            var a = getByIdUseCase.Execute(request);
 
             a.Should().NotBeNull();
-            b.Should().NotBeNull();
 
         }
     }

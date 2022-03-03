@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudyProject.Infrastructure.Entidades
 {
@@ -14,6 +12,6 @@ namespace StudyProject.Infrastructure.Entidades
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
-
+        public Guid CustomerId { get; set; }
     }
 }
