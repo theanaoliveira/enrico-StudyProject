@@ -1,4 +1,5 @@
 using Autofac;
+using Autofac.Configuration;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StudyProject.Infrastructure.Modules;
+using StudyProject.Webapi.DependencyInjection;
 using System;
 
 namespace StudyProject.Webapi
@@ -20,9 +22,16 @@ namespace StudyProject.Webapi
         }
 
         public IConfiguration Configuration { get; }
+        public ILifetimeScope AutofacContainer { get; private set; }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ConfigurationModule(Configuration));
+            builder.AddAutofacRegistration();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -32,17 +41,6 @@ namespace StudyProject.Webapi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project", Version = "v1" });
             });
             services.AddSwaggerGenNewtonsoftSupport();
-
-            var builder = new ContainerBuilder();
-
-            builder.RegisterModule<InfrastructureModule>();
-            builder.RegisterModule<ApplicationModule>();
-
-            builder.Populate(services);
-
-            var container = builder.Build();
-
-            return new AutofacServiceProvider(container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

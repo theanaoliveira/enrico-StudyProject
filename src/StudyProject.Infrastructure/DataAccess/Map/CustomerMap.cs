@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StudyProject.Infrastructure.Entidades;
+using StudyProject.Infrastructure.DataAccess.Entidades;
 
-namespace StudyProject.Infrastructure.Map
+namespace StudyProject.Infrastructure.DataAccess.Map
 {
     public class CustomerMap : IEntityTypeConfiguration<Customer>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StudyProject.Infrastructure.Entidades
+namespace StudyProject.Infrastructure.DataAccess.Entidades
 {
     public class Endereco
     {

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using StudyProject.Infrastructure;
+using StudyProject.Infrastructure.DataAccess;
 
-namespace StudyProject.Infrastructure.Migrations
+namespace StudyProject.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220303183954_CriacaoBancoDados")]
-    partial class CriacaoBancoDados
+    [Migration("20220303193358_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace StudyProject.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("StudyProject.Infrastructure.Entidades.Customer", b =>
+            modelBuilder.Entity("StudyProject.Infrastructure.DataAccess.Entidades.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,10 +47,10 @@ namespace StudyProject.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer","public");
                 });
 
-            modelBuilder.Entity("StudyProject.Infrastructure.Entidades.Endereco", b =>
+            modelBuilder.Entity("StudyProject.Infrastructure.DataAccess.Entidades.Endereco", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,14 +85,14 @@ namespace StudyProject.Infrastructure.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("Endereco");
+                    b.ToTable("Endereco","public");
                 });
 
-            modelBuilder.Entity("StudyProject.Infrastructure.Entidades.Endereco", b =>
+            modelBuilder.Entity("StudyProject.Infrastructure.DataAccess.Entidades.Endereco", b =>
                 {
-                    b.HasOne("StudyProject.Infrastructure.Entidades.Customer", null)
+                    b.HasOne("StudyProject.Infrastructure.DataAccess.Entidades.Customer", null)
                         .WithOne("Endereco")
-                        .HasForeignKey("StudyProject.Infrastructure.Entidades.Endereco", "CustomerId")
+                        .HasForeignKey("StudyProject.Infrastructure.DataAccess.Entidades.Endereco", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

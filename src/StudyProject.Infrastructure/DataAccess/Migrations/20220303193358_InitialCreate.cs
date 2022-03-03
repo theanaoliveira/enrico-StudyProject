@@ -1,14 +1,18 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace StudyProject.Infrastructure.Migrations
+namespace StudyProject.Infrastructure.DataAccess.Migrations
 {
-    public partial class CriacaoBancoDados : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "public");
+
             migrationBuilder.CreateTable(
                 name: "Customer",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -26,6 +30,7 @@ namespace StudyProject.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Endereco",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -44,6 +49,7 @@ namespace StudyProject.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Endereco_Customer_CustomerId",
                         column: x => x.CustomerId,
+                        principalSchema: "public",
                         principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -51,6 +57,7 @@ namespace StudyProject.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Endereco_CustomerId",
+                schema: "public",
                 table: "Endereco",
                 column: "CustomerId",
                 unique: true);
@@ -59,10 +66,12 @@ namespace StudyProject.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Endereco");
+                name: "Endereco",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Customer",
+                schema: "public");
         }
     }
 }

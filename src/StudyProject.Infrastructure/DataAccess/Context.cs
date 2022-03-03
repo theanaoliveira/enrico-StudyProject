@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudyProject.Infrastructure.Entidades;
-using StudyProject.Infrastructure.Map;
+using StudyProject.Infrastructure.DataAccess.Entidades;
+using StudyProject.Infrastructure.DataAccess.Map;
 using System;
+using System.Collections.Generic;
 
-namespace StudyProject.Infrastructure
+namespace StudyProject.Infrastructure.DataAccess
 {
     public class Context : DbContext
     {
@@ -14,7 +15,11 @@ namespace StudyProject.Infrastructure
         {
             if (Environment.GetEnvironmentVariable("CONN") != null)
             {
-                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("CONN"), o => o.EnableRetryOnFailure(2));
+                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("CONN"), npgsqlOptionsAction: options =>
+                {
+                    options.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), new List<string>());
+                    options.MigrationsHistoryTable("_MigrationHistory", "public");
+                });
             }
             else
                 optionsBuilder.UseInMemoryDatabase("CustomerInMemory");
@@ -27,6 +32,5 @@ namespace StudyProject.Infrastructure
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

@@ -7,8 +7,8 @@ namespace StudyProject.Infrastructure.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<Customer, Entidades.Customer>().ReverseMap();
-            CreateMap<Endereco, Entidades.Endereco>().ReverseMap();
+            CreateMap<Customer, DataAccess.Entidades.Customer>().ReverseMap();
+            CreateMap<Endereco, DataAccess.Entidades.Endereco>().ReverseMap();
         }
     }
 }

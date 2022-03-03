@@ -2,8 +2,9 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StudyProject.Application.Repositories;
+using StudyProject.Infrastructure.DataAccess;
+using StudyProject.Infrastructure.DataAccess.Repositorios;
 using StudyProject.Infrastructure.Mapper;
-using StudyProject.Infrastructure.Repositorios;
 using System;
 using System.Collections.Generic;
 
@@ -41,12 +42,13 @@ namespace StudyProject.Infrastructure.Modules
             var conn = Environment.GetEnvironmentVariable("CONN");
 
             builder.RegisterAssemblyTypes(typeof(Context).Assembly)
+                .Where(t => (t.Namespace ?? string.Empty).Contains("DataAccess"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
             if (!string.IsNullOrEmpty(conn))
             {
-                var context = new Context();
+                using Context context = new Context();
                 context.Database.Migrate();
             }
         }

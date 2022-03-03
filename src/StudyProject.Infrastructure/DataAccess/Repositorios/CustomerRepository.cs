@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StudyProject.Infrastructure.Repositorios
+namespace StudyProject.Infrastructure.DataAccess.Repositorios
 {
     public class CustomerRepository : ICustomerRepository
     {
@@ -20,7 +20,7 @@ namespace StudyProject.Infrastructure.Repositorios
         public bool AdicionarCliente(Customer customer)
         {
             using var context = new Context();
-            var customerEntity = mapper.Map<Entidades.Customer>(customer);
+            var customerEntity = mapper.Map<DataAccess.Entidades.Customer>(customer);
 
             context.Customers.Add(customerEntity);
 
@@ -32,7 +32,7 @@ namespace StudyProject.Infrastructure.Repositorios
         public bool AtualizarCliente(Customer customer)
         {
             using var context = new Context();
-            var customerEntity = mapper.Map<Entidades.Customer>(customer);
+            var customerEntity = mapper.Map<DataAccess.Entidades.Customer>(customer);
 
             context.Customers.Update(customerEntity);
 
@@ -74,7 +74,7 @@ namespace StudyProject.Infrastructure.Repositorios
         public bool AdicionarClientes(List<Customer> customers)
         {
             using var context = new Context();
-            var customerEntity = mapper.Map<List<Entidades.Customer>>(customers);
+            var customerEntity = mapper.Map<List<DataAccess.Entidades.Customer>>(customers);
 
             context.Customers.AddRange(customerEntity);
 
