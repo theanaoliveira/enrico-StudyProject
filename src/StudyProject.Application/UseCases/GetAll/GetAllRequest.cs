@@ -19,6 +19,7 @@ namespace StudyProject.Application.UseCases.GetAll
         public string Estado { get; private set; }
         public List<string> Erros { get; set; }
         public List<string> ListaCliente { get; set; }
+        
         public GetAllRequest(string fullName, DateTime birthday, string rg, string cpf, string cep, string rua, string numero, string complemento, string bairro, string cidade, string estado)
         {
             FullName = fullName;

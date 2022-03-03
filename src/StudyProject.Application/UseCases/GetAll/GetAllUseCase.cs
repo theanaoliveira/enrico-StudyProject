@@ -15,16 +15,11 @@ namespace StudyProject.Application.UseCases.GetAll
             this.customerRepository = customerRepository;
         }
        
-        public Execute(GetAllRequest request)
-        {            
-            var listaClientes = customerRepository.GetAll();
-
-            request.ListaCliente.AddRange(listaClientes)
-
-
-            return <List<Customer>>(listaClientes);
-
+        public List<Customer> Execute()
+        {
+            var customerList = customerRepository.GetAll();
             
+            return customerList;           
 
         }
     }

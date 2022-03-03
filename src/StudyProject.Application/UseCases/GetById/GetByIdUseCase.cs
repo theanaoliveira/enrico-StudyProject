@@ -16,17 +16,11 @@ namespace StudyProject.Application.UseCases.GetById
         {
             this.customerRepository = customerRepository;
         }
-
-        public void Execute(GetByIdRequest request)
+        public Customer Execute(GetByIdRequest request)
         {
-            var endereco = new Endereco(request.Id, request.Cep, request.Rua, request.Numero, request.Complemento, request.Bairro, request.Cidade, request.Estado);
-            var cliente = new Customer(request.Id, request.FullName, request.Birthday, request.Rg, request.Cpf, DateTime.Now, endereco, true);
+            var customer = customerRepository.BuscarPorId(request.Id);
 
-            var clienteId = customerRepository.BuscarPorId(cliente.Id);
-
-            if (clienteId != null)
-                return 
-                
+            return customer;
         }
     }
 }

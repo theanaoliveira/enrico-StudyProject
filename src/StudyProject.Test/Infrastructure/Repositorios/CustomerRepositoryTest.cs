@@ -58,8 +58,6 @@ namespace StudyProject.Test.Infrastructure.Repositorios
         {
             var customer = CustomerBuilder.New().WithRg("154872514").WithCpf("08197645281").Build();
 
-           
-
             var retorno = customerRepository.AdicionarCliente(customer);
 
             retorno.Should().BeTrue();
