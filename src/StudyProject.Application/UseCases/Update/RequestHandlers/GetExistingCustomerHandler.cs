@@ -16,10 +16,11 @@ namespace StudyProject.Application.UseCases.Update.RequestHandlers
             request.Customer = customerRepository.BuscarPorId(request.Id);
 
             if (request.Customer == null)
-            {
                 request.Erros.Add($"Cliente: {request.Id} não encontrado.");
-                return;
-            }
+            else if (!request.Customer.Ativo) 
+                request.Erros.Add($"Cliente: {request.Id} desativado.");
+
+            if (request.Erros.Count > 0) return;
 
             sucessor?.ProcessRequest(request);
         }

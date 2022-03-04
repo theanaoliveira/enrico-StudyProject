@@ -18,23 +18,23 @@ namespace StudyProject.Webapi.Models.Request
         public string Cpf { get; set; }
 
         [Required]
-        public string Cep { get; set; }
+        public string ZipCode { get; set; }
 
         [Required]
-        public string Rua { get; set; }
+        public string Street { get; set; }
 
         [Required]
-        public string Numero { get; set; }
+        public string Number { get; set; }
 
-        public string Complemento { get; set; }
-
-        [Required]
-        public string Bairro { get; set; }
+        public string Complement { get; set; }
 
         [Required]
-        public string Cidade { get; set; }
+        public string Neighborhood { get; set; }
 
         [Required]
-        public string Estado { get; set; }
+        public string City { get; set; }
+
+        [Required]
+        public string State { get; set; }
     }
 }

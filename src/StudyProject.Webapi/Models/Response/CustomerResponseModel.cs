@@ -10,10 +10,10 @@ namespace StudyProject.Webapi.Models.Response
         public string Rg { get; private set; }
         public string Cpf { get; private set; }
         public DateTime RegisterDate { get; private set; }
-        public EnderecoResponseModel Endereco { get; private set; }
-        public bool Ativo { get; private set; }
+        public AddressResponseModel Address { get; private set; }
+        public bool Active { get; private set; }
 
-        public CustomerResponseModel(Guid id, string fullName, DateTime birthday, string rg, string cpf, DateTime registerDate, EnderecoResponseModel endereco, bool ativo)
+        public CustomerResponseModel(Guid id, string fullName, DateTime birthday, string rg, string cpf, DateTime registerDate, AddressResponseModel address, bool active)
         {
             Id = id;
             FullName = fullName;
@@ -21,32 +21,32 @@ namespace StudyProject.Webapi.Models.Response
             Rg = rg;
             Cpf = cpf;
             RegisterDate = registerDate;
-            Endereco = endereco;
-            Ativo = ativo;
+            Address = address;
+            Active = active;
         }
     }
 
-    public class EnderecoResponseModel
+    public class AddressResponseModel
     {
         public Guid Id { get; private set; }
-        public string Cep { get; private set; }
-        public string Rua { get; private set; }
-        public string Numero { get; private set; }
-        public string Complemento { get; private set; }
-        public string Bairro { get; private set; }
-        public string Cidade { get; private set; }
-        public string Estado { get; private set; }
+        public string ZipCode { get; private set; }
+        public string Street { get; private set; }
+        public string Number { get; private set; }
+        public string Complement { get; private set; }
+        public string Neighborhood { get; private set; }
+        public string City { get; private set; }
+        public string State { get; private set; }
 
-        public EnderecoResponseModel(Guid id, string cep, string rua, string numero, string complemento, string bairro, string cidade, string estado)
+        public AddressResponseModel(Guid id, string zipCode, string street, string number, string complement, string neighborhood, string city, string state)
         {
             Id = id;
-            Cep = cep;
-            Rua = rua;
-            Numero = numero;
-            Complemento = complemento;
-            Bairro = bairro;
-            Cidade = cidade;
-            Estado = estado;
+            ZipCode = zipCode;
+            Street = street;
+            Number = number;
+            Complement = complement;
+            Neighborhood = neighborhood;
+            City = city;
+            State = state;
         }
     }
 }
